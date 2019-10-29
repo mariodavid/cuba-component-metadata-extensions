@@ -8,7 +8,7 @@ import com.haulmont.cuba.gui.screen.FrameOwner;
 
 
 
-public interface MetadataDialogs extends Dialogs {
+public interface MetadataDialogs {
 
 
     String NAME = "ddcme_MetadataDialogs";

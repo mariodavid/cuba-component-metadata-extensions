@@ -19,11 +19,7 @@ import static com.haulmont.cuba.gui.app.core.inputdialog.InputDialog.INPUT_DIALO
 
 
 @Component(MetadataDialogs.NAME)
-public class MetadataDialogsImpl extends WebDialogs implements MetadataDialogs {
-
-    public MetadataDialogsImpl(AppUI ui) {
-        super(ui);
-    }
+public class MetadataDialogsImpl implements MetadataDialogs {
 
     @Override
     public MetadataInputDialogBuilder createMetadataInputDialog(FrameOwner owner) {
