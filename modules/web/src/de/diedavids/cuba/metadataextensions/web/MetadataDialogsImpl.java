@@ -4,11 +4,12 @@ import com.haulmont.chile.core.datatypes.Datatype;
 import com.haulmont.chile.core.datatypes.impl.StringDatatype;
 import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.core.entity.Entity;
+import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.app.core.inputdialog.InputDialog;
 import com.haulmont.cuba.gui.app.core.inputdialog.InputParameter;
 import com.haulmont.cuba.gui.screen.FrameOwner;
+import com.haulmont.cuba.gui.screen.Screen;
 import com.haulmont.cuba.web.AppUI;
-import com.haulmont.cuba.web.sys.WebDialogs;
 import de.diedavids.cuba.metadataextensions.MetadataDialogs;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -21,19 +22,25 @@ import static com.haulmont.cuba.gui.app.core.inputdialog.InputDialog.INPUT_DIALO
 @Component(MetadataDialogs.NAME)
 public class MetadataDialogsImpl implements MetadataDialogs {
 
-    @Override
-    public MetadataInputDialogBuilder createMetadataInputDialog(FrameOwner owner) {
-        return new MetadataInputDialogBuilderImpl(owner);
+
+    private Dialogs getDialogs() {
+        return AppUI.getCurrent().getDialogs();
     }
 
+    @Override
+    public MetadataInputDialogBuilder createMetadataInputDialog(FrameOwner frameOwner) {
+        return new MetadataInputDialogBuilderImpl(frameOwner);
+    }
 
-    public class MetadataInputDialogBuilderImpl extends WebDialogs.InputDialogBuilderImpl implements MetadataInputDialogBuilder {
+    public class MetadataInputDialogBuilderImpl implements MetadataInputDialogBuilder {
 
+        private FrameOwner frameOwner;
         private MetaProperty metaProperty;
         private Entity entityInstance;
+        private Dialogs.InputDialogBuilder inputDialog;
 
-        public MetadataInputDialogBuilderImpl(FrameOwner owner) {
-            super(owner);
+        public MetadataInputDialogBuilderImpl(FrameOwner frameOwner) {
+            this.frameOwner = frameOwner;
         }
 
 
@@ -53,6 +60,8 @@ public class MetadataDialogsImpl implements MetadataDialogs {
         @Override
         public InputDialog build() {
 
+            inputDialog = getDialogs().createInputDialog(frameOwner);
+
             if (metaProperty.getRange().isDatatype()) {
                 handleDatatypeCase();
             } else if (metaProperty.getRange().isEnum()) {
@@ -63,7 +72,13 @@ public class MetadataDialogsImpl implements MetadataDialogs {
                 handleStringCase();
             }
 
-            return super.build();
+            return inputDialog.build();
+        }
+
+        @Override
+        public Screen show() {
+            InputDialog inputDialog = build();
+            return inputDialog.show();
         }
 
         private void handleStringCase() {
@@ -92,9 +107,8 @@ public class MetadataDialogsImpl implements MetadataDialogs {
         }
 
         private void handleDatatypeCase() {
-            InputParameter inputParameter;
             Datatype<Object> datatype = metaProperty.getRange().asDatatype();
-            inputParameter = inputParameter(metaProperty)
+            InputParameter inputParameter = inputParameter(metaProperty)
                     .withDatatype(datatype);
 
             configureInputDialog(inputParameter, datatype);
@@ -120,7 +134,7 @@ public class MetadataDialogsImpl implements MetadataDialogs {
                 }
             }
 
-            this
+            inputDialog
                     .withParameter(inputParameter)
                     .withCaption("setValueCaption")
                     .withCloseListener(closeEvent -> {
@@ -128,8 +142,7 @@ public class MetadataDialogsImpl implements MetadataDialogs {
                             Object providedDefaultValue = closeEvent.getValue("value");
                             this.entityInstance.setValue(metaProperty.getName(), datatype.format(providedDefaultValue));
                         }
-                    })
-                    .show();
+                    });
         }
     }
 

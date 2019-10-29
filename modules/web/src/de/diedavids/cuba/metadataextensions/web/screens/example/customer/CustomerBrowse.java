@@ -22,8 +22,6 @@ public class CustomerBrowse extends StandardLookup<Customer> {
     @Inject
     protected GroupTable<Customer> customersTable;
     @Inject
-    protected Metadata metadata;
-    @Inject
     protected CollectionContainer<Customer> customersDc;
 
     @Subscribe("customersTable.setName")
