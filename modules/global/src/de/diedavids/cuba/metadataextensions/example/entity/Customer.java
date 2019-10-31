@@ -6,6 +6,8 @@ import com.haulmont.cuba.core.entity.StandardEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @NamePattern("%s|name")
 @Table(name = "DDCME_CUSTOMER")
@@ -15,6 +17,18 @@ public class Customer extends StandardEntity {
 
     @Column(name = "NAME")
     protected String name;
+
+    @NotNull
+    @Column(name = "BIRTHDAY", nullable = false)
+    protected LocalDate birthday;
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
 
     public String getName() {
         return name;

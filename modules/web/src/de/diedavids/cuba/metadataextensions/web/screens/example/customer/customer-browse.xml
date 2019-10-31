@@ -3,7 +3,7 @@
         caption="msg://browseCaption"
         focusComponent="customersTable"
         messagesPack="de.diedavids.cuba.metadataextensions.web.screens.example.customer">
-    <data readOnly="true">
+    <data>
         <collection id="customersDc"
                     class="de.diedavids.cuba.metadataextensions.example.entity.Customer"
                     view="_local">
@@ -30,10 +30,11 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
-                <action id="setName" caption="msg://setName" icon="EDIT_ACTION"/>
+                <action id="quickChange" caption="msg://quickChange" icon="EDIT_ACTION"/>
             </actions>
             <columns>
                 <column id="name"/>
+                <column id="birthday"/>
             </columns>
             <rowsCount/>
             <buttonsPanel id="buttonsPanel"
@@ -41,7 +42,7 @@
                 <button id="createBtn" action="customersTable.create"/>
                 <button id="editBtn" action="customersTable.edit"/>
                 <button id="removeBtn" action="customersTable.remove"/>
-                <button id="setNameBtn" action="customersTable.setName"/>
+                <button id="quickChangeBtn" action="customersTable.quickChange"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
