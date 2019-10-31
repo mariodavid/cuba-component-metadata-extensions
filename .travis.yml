@@ -7,9 +7,6 @@ cache:
   - "$HOME/.gradle/wrapper/"
 before_install:
 - chmod +x ./gradlew
-- "./gradlew --no-daemon startDb"
-install:
-- "./gradlew --no-daemon createTestDb"
 script:
 - "./gradlew --no-daemon check --info"
 deploy:

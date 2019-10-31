@@ -1,7 +1,6 @@
 package de.diedavids.cuba.metadataextensions;
 
 import com.haulmont.cuba.core.entity.Entity;
-import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.app.core.inputdialog.DialogActions;
 import com.haulmont.cuba.gui.app.core.inputdialog.InputDialog;
 import com.haulmont.cuba.gui.components.ValidationErrors;
