@@ -10,7 +10,7 @@
         <param-value>
             classpath:de/diedavids/cuba/metadataextensions/web-app.properties
             /WEB-INF/local.app.properties
-            "file:${catalina.base}/conf/app/local.app.properties"
+            "file:${catalina.base}/conf/metadataextensions/local.app.properties"
         </param-value>
     </context-param>
     <!--Application components-->
