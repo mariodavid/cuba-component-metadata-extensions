@@ -6,9 +6,12 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 before_install:
-- chmod +x ./gradlew
+  - chmod +x ./gradlew
+  - "./gradlew --no-daemon startDb"
+install:
+  - "./gradlew --no-daemon createTestDb"
 script:
-- "./gradlew --no-daemon check --info"
+  - "./gradlew --no-daemon check --info"
 deploy:
   provider: script
   script: "./gradlew clean assemble bintrayUpload --debug"
