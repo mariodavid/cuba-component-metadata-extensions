@@ -3,9 +3,14 @@
 *.ipr
 *.iml
 *.iws
+.ideaDataSources
 build/*
 deploy/*
 modules/*/build/*
-.idea/*
+modules/*/test-home/*
 out
 test-run
+.DS_Store
+test-home
+dataSources
+.idea
