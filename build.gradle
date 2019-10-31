@@ -50,7 +50,14 @@ configure([globalModule, coreModule, webModule, guiModule]) {
     apply(plugin: 'cuba')
 
     dependencies {
+        compile('org.codehaus.groovy:groovy-all:2.5.2')
         testCompile('junit:junit:4.12')
+        testCompile 'org.assertj:assertj-core:2.9.0'
+
+
+        testCompile('org.spockframework:spock-core:1.2-groovy-2.5')
+        testCompile('org.springframework:spring-test:4.3.1.RELEASE')
+        testRuntime "cglib:cglib-nodep:3.2.4"
     }
 
     task sourceJar(type: Jar) {
@@ -61,6 +68,19 @@ configure([globalModule, coreModule, webModule, guiModule]) {
     artifacts {
         archives sourceJar
     }
+}
+
+configure([globalModule, coreModule, guiModule, webModule]) {
+    apply(plugin: 'groovy')
+
+    sourceSets {
+        main { groovy { srcDirs = ["src"] } }
+        test { groovy { srcDirs = ["test"] } }
+    }
+
+    sourceSets.main.output.classesDir = new File(project.buildDir, "classes/main")
+    sourceSets.test.output.classesDir = new File(project.buildDir, "classes/test")
+
 }
 
 configure(globalModule) {
