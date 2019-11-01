@@ -2,7 +2,7 @@
 [ ![Download](https://api.bintray.com/packages/mariodavid/cuba-components/cuba-component-metadata-extensions/images/download.svg) ](https://bintray.com/mariodavid/cuba-components/cuba-component-metadata-extensions/_latestVersion)
 [![license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
-# CUBA Platform Application Component - Metadata Extensions
+# CUBA Component - Metadata Extensions
 
 This application component that provides extensions for different use-cases for metadata interactions in CUBA.
 
