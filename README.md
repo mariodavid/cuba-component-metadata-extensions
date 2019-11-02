@@ -2,7 +2,7 @@
 [ ![Download](https://api.bintray.com/packages/mariodavid/cuba-components/cuba-component-metadata-extensions/images/download.svg) ](https://bintray.com/mariodavid/cuba-components/cuba-component-metadata-extensions/_latestVersion)
 [![license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
 
-# CUBA Platform Application Component - Metadata Extensions
+# CUBA Component - Metadata Extensions
 
 This application component that provides extensions for different use-cases for metadata interactions in CUBA.
 
@@ -105,4 +105,4 @@ It means, that in case the Metadata Input Dialog contains an entity reference th
 the value defined in the customer instance is used as the default value for the input field.
 Furthermore it writes back the value that was entered during the Dialog into the field of the entity instance
 
-For more information about the options for the parameter see [https://github.com/mariodavid/cuba-component-metadata-extensions/blob/master/modules/gui/src/de/diedavids/cuba/metadataextensions/MetaPropertyInputParameter.java](MetaPropertyInputParameter.java).
+For more information about the options for the parameter see [MetaPropertyInputParameter.java](https://github.com/mariodavid/cuba-component-metadata-extensions/blob/master/modules/gui/src/de/diedavids/cuba/metadataextensions/MetaPropertyInputParameter.java).
