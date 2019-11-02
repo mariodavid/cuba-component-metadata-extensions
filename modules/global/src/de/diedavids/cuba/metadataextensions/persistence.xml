@@ -3,5 +3,8 @@
     <persistence-unit name="cuba-component-metadata-extensions" transaction-type="RESOURCE_LOCAL">
 
         <class>de.diedavids.cuba.metadataextensions.example.entity.Customer</class>
+        <class>de.diedavids.cuba.metadataextensions.example.entity.EntityVisibilityConfiguration</class>
+        <class>de.diedavids.cuba.metadataextensions.converter.MetaClassConverter</class>
+        <class>de.diedavids.cuba.metadataextensions.converter.MetaPropertyConverter</class>
     </persistence-unit>
 </persistence>
