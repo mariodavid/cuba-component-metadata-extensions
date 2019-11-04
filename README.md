@@ -49,6 +49,10 @@ The Changelog also contains information about breaking changes and tips on how t
 ## Using the application component
 
 
+### Example usage
+To see this application component in action, check out this example: [cuba-example-using-metadata-extensions](https://github.com/mariodavid/cuba-example-using-metadata-extensions).
+
+
 
 ### MetadataDialogs API
 
