@@ -42,7 +42,13 @@ public class MetadataDataProviderBean implements MetadataDataProvider {
 
     @Override
     public List<MetaProperty> getBusinessMetaProperties(MetaClass entityMetaClass) {
-        return Collections.emptyList();
+        return entityMetaClass.getProperties()
+                .stream()
+                .filter(metaProperty ->
+                        !getMetadataTools().isSystem(metaProperty)
+                                && !getMetadataTools().isSystemLevel(metaProperty)
+                )
+                .collect(Collectors.toList());
     }
 
     @Override
