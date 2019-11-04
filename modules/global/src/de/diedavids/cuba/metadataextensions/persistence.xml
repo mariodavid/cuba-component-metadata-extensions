@@ -7,6 +7,8 @@
         <class>de.diedavids.cuba.metadataextensions.converter.MetaClassConverter</class>
         <class>de.diedavids.cuba.metadataextensions.converter.MetaPropertyConverter</class>
 
+        <class>de.diedavids.cuba.metadataextensions.entity.EntityAttributeAwareStandardEntity</class>
+        <class>de.diedavids.cuba.metadataextensions.entity.EntityAwareStandardEntity</class>
 
     </persistence-unit>
 </persistence>
