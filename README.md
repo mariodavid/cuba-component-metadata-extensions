@@ -56,7 +56,7 @@ To see this application component in action, check out this example: [cuba-examp
 
 ### MetadataDialogs API
 
-The `MetadataDialogs` API is an use-case extension of the `Dialogs` API provided by CUBA since version 7.0.
+The `MetadataDialogs` API is an extension of the `Dialogs` API provided by CUBA since version 7.0.
 
 The MetadataDialogs provides the ability to create an `InputDialog` that was introduces in CUBA 7.1. Instead
 of using this in the general way, where the native datatypes are references, the method `createMetadataInputDialog`
@@ -110,3 +110,44 @@ the value defined in the customer instance is used as the default value for the 
 Furthermore it writes back the value that was entered during the Dialog into the field of the entity instance
 
 For more information about the options for the parameter see [MetaPropertyInputParameter.java](https://github.com/mariodavid/cuba-component-metadata-extensions/blob/master/modules/gui/src/de/diedavids/cuba/metadataextensions/MetaPropertyInputParameter.java).
+
+### Metadata Storage for Entities
+
+The metadata storage facilities for entities allow to easily reference meta classes and meta properties in an
+entity. A common use-case for that is configuration entities that store a particular information on a
+per-entity(-attribute) basis.
+
+An example is an `DefaultValueConfiguration` Entity which stores default values for entity attributes.
+Those default values should be assigned to a new instance of the entity when it is created. In order to store this
+default value, it also has to reference the particular entity attribute for which this default value is defined.
+
+This application component helps creating those kinds of entities by providing the following pieces:
+
+#### Mapped Superclasses: `EntityAwareStandardEntity` and `EntityAttributeAwareStandardEntity`
+
+There are two JPA entities defined as mapped superclasses that can be extended in the application entity:
+
+* `EntityAwareStandardEntity` - Base class for Entities that reference a specific entity
+* `EntityAttributeAwareStandardEntity` - Base class for Entities that reference a specific entity _attribute_
+
+The entities pre populated attributes for storing a MetaClass (attribute: `entity`) and a MetaProperty (attribute: `entityAttribute`).
+
+Those mapped superclasses extend CUBAs `StandardEntity`. In case the `StandardEntity` is not applicable in the target
+application (e.g. because no soft-delete is required), the corresponding interfaces `EntityAware` & `EntityAttributeAware`
+can be leveraged.
+
+#### Custom Datatypes and Converters for Metadata
+
+The application components provides support for defining both CUBA metadata interfaces directly as a datatype in a JPA entity:
+
+##### Metadata Datatypes
+
+* `de.diedavids.cuba.metadataextensions.datatype.MetaClassDatatype`: allows to use `com.haulmont.chile.core.model.MetaClass` directly as a datatype
+* `de.diedavids.cuba.metadataextensions.datatype.MetaPropertyDatatype`: allows to use `com.haulmont.chile.core.model.MetaProperty` directly as a datatype
+
+
+##### Metadata Converters
+
+* `de.diedavids.cuba.metadataextensions.converter.MetaClassConverter`: allows to convert a `com.haulmont.chile.core.model.MetaClass` to a column in the database
+* `de.diedavids.cuba.metadataextensions.converter.MetaPropertyConverter`: allows to use `com.haulmont.chile.core.model.MetaProperty` to a column in the database
+

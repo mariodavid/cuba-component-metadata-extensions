@@ -7,6 +7,12 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 
+
+
+/**
+ * Base class for Entities that reference a specific entity attribute (mostly per-entity-attribute configuration entities) <br>
+ * Optimistically locked, implements Updatable and SoftDelete.
+ */
 @MappedSuperclass
 public class EntityAttributeAwareStandardEntity extends EntityAwareStandardEntity implements EntityAttributeAware {
     private static final long serialVersionUID = 1095944424907519563L;

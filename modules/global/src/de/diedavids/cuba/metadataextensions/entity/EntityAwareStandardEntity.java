@@ -9,6 +9,12 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 
+
+
+/**
+ * Base class for Entities that reference a specific entity (mostly per-entity configuration entities) <br>
+ * Optimistically locked, implements Updatable and SoftDelete.
+ */
 @MappedSuperclass
 public class EntityAwareStandardEntity extends StandardEntity implements EntityAware {
     private static final long serialVersionUID = -1405141025096148621L;
