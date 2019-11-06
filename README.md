@@ -151,3 +151,9 @@ The application components provides support for defining both CUBA metadata inte
 * `de.diedavids.cuba.metadataextensions.converter.MetaClassConverter`: allows to convert a `com.haulmont.chile.core.model.MetaClass` to a column in the database
 * `de.diedavids.cuba.metadataextensions.converter.MetaPropertyConverter`: allows to use `com.haulmont.chile.core.model.MetaProperty` to a column in the database
 
+
+#### Non-persistent Entity representing a MetaClass
+
+Sometimes it is necessary to have an Entity that represents a MetaClass. This is useful when e.g. a list of all existing 
+MetaClasses in the application should be rendered. For this use-case this application component contains the entity
+`de.diedavids.cuba.metadataextensions.entity.MetaClassEntity` that serves that purpose.
