@@ -17,9 +17,17 @@ buildscript {
         
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0"
 
+//        classpath 'net.saliman:gradle-cobertura-plugin:2.5.0'
+//        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2"
     }
 }
 
+
+plugins {
+    id 'net.researchgate.release' version '2.1.2'
+}
+
+//apply plugin: "com.github.kt3k.coveralls"
 def modulePrefix = 'metadataextensions'
 
 def globalModule = project(":${modulePrefix}-global")
@@ -319,4 +327,3 @@ task restart(dependsOn: ['stop', ":${modulePrefix}-core:deploy", ":${modulePrefi
         start.execute()
     }
 }
-
