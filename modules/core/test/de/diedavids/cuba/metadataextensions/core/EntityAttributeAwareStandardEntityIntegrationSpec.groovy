@@ -9,6 +9,7 @@ import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.security.entity.User
 import de.diedavids.cuba.metadataextensions.DdcmeTestContainer
 import de.diedavids.cuba.metadataextensions.entity.example.EntityVisibilityConfiguration
+import de.diedavids.cuba.metadataextensions.entity.example.ProductionEntity
 import org.junit.ClassRule
 import spock.lang.Shared
 import spock.lang.Specification
@@ -48,10 +49,10 @@ class EntityAttributeAwareStandardEntityIntegrationSpec extends Specification {
         noExceptionThrown()
     }
 
-    def "the entity and entity attribute cen be retrieved from the database"() {
+    def "[production entity (src/main)] the entity and entity attribute cen be retrieved from the database"() {
 
         given:
-        EntityVisibilityConfiguration entityVisibilityConfiguration = metadata.create(EntityVisibilityConfiguration)
+        ProductionEntity entityVisibilityConfiguration = metadata.create(ProductionEntity)
 
 
         MetaClass userMetaClass = metadata.getClass(User)
@@ -60,14 +61,42 @@ class EntityAttributeAwareStandardEntityIntegrationSpec extends Specification {
         and:
         entityVisibilityConfiguration.entityMetaClass = userMetaClass
         entityVisibilityConfiguration.entityAttribute = loginMetaProperty
-        entityVisibilityConfiguration.visible = true
+        entityVisibilityConfiguration.test = "hello"
 
         and:
         dataManager.commit(entityVisibilityConfiguration)
 
         when:
-        EntityVisibilityConfiguration reloadedEntity = dataManager.load(EntityVisibilityConfiguration.class)
+        ProductionEntity reloadedEntity = dataManager.load(ProductionEntity.class)
                 .id(entityVisibilityConfiguration.getId())
+                .one()
+
+        then:
+        reloadedEntity.test == "hello"
+        reloadedEntity.entityAttribute == loginMetaProperty
+        reloadedEntity.entityMetaClass == userMetaClass
+    }
+
+    def "[test entity (src/test)] the entity and entity attribute cen be retrieved from the database"() {
+
+        given:
+        EntityVisibilityConfiguration testEntity = metadata.create(EntityVisibilityConfiguration)
+
+
+        MetaClass userMetaClass = metadata.getClass(User)
+        MetaProperty loginMetaProperty = userMetaClass.getProperty('login')
+
+        and:
+        testEntity.entityMetaClass = userMetaClass
+        testEntity.entityAttribute = loginMetaProperty
+        testEntity.visible = true
+
+        and:
+        dataManager.commit(testEntity)
+
+        when:
+        EntityVisibilityConfiguration reloadedEntity = dataManager.load(EntityVisibilityConfiguration.class)
+                .id(testEntity.getId())
                 .one()
 
         then:
