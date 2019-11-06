@@ -3,12 +3,12 @@ package de.diedavids.cuba.metadataextensions.entity;
 import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.cuba.core.entity.StandardEntity;
-import de.diedavids.cuba.metadataextensions.converter.MetaClassConverter;
+import de.diedavids.cuba.metadataextensions.converter.MetaPropertyConverter;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
-
 
 
 /**
@@ -19,18 +19,19 @@ import javax.persistence.MappedSuperclass;
 public class EntityAwareStandardEntity extends StandardEntity implements EntityAware {
     private static final long serialVersionUID = -1405141025096148621L;
 
-    @Convert(converter = MetaClassConverter.class)
+    @Convert(converter = MetaPropertyConverter.class)
     @MetaProperty(datatype = "MetaClass")
-    @Column(name = "ENTITY")
-    protected MetaClass entity;
+    @Column(name = "ENTITY_META_CLASS")
+    protected MetaClass entityMetaClass;
 
     @Override
-    public MetaClass getEntity() {
-        return entity;
+    public MetaClass getEntityMetaClass() {
+        return entityMetaClass;
     }
 
     @Override
-    public void setEntity(MetaClass entity) {
-        this.entity = entity;
+    public void setEntityMetaClass(MetaClass entityMetaClass) {
+        this.entityMetaClass = entityMetaClass;
     }
+
 }

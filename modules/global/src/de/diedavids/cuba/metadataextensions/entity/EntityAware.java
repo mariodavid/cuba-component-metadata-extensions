@@ -8,7 +8,7 @@ import com.haulmont.chile.core.model.MetaClass;
  */
 public interface EntityAware {
 
-    MetaClass getEntity();
+    MetaClass getEntityMetaClass();
 
-    void setEntity(MetaClass entity);
+    void setEntityMetaClass(MetaClass entity);
 }

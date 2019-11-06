@@ -3,6 +3,7 @@ package de.diedavids.cuba.metadataextensions.entity;
 import com.haulmont.chile.core.annotations.MetaProperty;
 import de.diedavids.cuba.metadataextensions.converter.MetaPropertyConverter;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
@@ -16,7 +17,6 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class EntityAttributeAwareStandardEntity extends EntityAwareStandardEntity implements EntityAttributeAware {
     private static final long serialVersionUID = 1095944424907519563L;
-
 
     @Convert(converter = MetaPropertyConverter.class)
     @MetaProperty(datatype = "MetaProperty")

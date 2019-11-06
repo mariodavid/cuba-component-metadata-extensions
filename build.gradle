@@ -139,6 +139,10 @@ configure(globalModule) {
         main {
             enabled = true
         }
+        test {
+            enabled = true
+            persistenceConfig = 'metadataextensions-test-persistence.xml'
+        }
     }
 
     jar {

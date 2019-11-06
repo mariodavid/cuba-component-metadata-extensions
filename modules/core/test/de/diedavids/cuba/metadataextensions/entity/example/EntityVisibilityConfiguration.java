@@ -1,12 +1,13 @@
-package de.diedavids.cuba.metadataextensions.example.entity;
+package de.diedavids.cuba.metadataextensions.entity.example;
 
-import com.haulmont.chile.core.model.MetaClass;
+import com.haulmont.chile.core.annotations.NamePattern;
 import de.diedavids.cuba.metadataextensions.entity.EntityAttributeAwareStandardEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+@NamePattern("%s|visible")
 @Table(name = "DDCME_ENTITY_VISIBILITY_CONFIGURATION")
 @Entity(name = "ddcme_EntityVisibilityConfiguration")
 public class EntityVisibilityConfiguration extends EntityAttributeAwareStandardEntity {
@@ -24,23 +25,4 @@ public class EntityVisibilityConfiguration extends EntityAttributeAwareStandardE
         this.visible = visible;
     }
 
-    @Override
-    public com.haulmont.chile.core.model.MetaProperty getEntityAttribute() {
-        return entityAttribute;
-    }
-
-    @Override
-    public void setEntityAttribute(com.haulmont.chile.core.model.MetaProperty entityAttribute) {
-        this.entityAttribute = entityAttribute;
-    }
-
-    @Override
-    public MetaClass getEntity() {
-        return entity;
-    }
-
-    @Override
-    public void setEntity(MetaClass entity) {
-        this.entity = entity;
-    }
 }
