@@ -15,6 +15,8 @@
         />
     </datatypes>
 
-    <metadata-model root-package="de.diedavids.cuba.metadataextensions" namespace="ddcme"/>
+    <metadata-model root-package="de.diedavids.cuba.metadataextensions" namespace="ddcme">
+        <class>de.diedavids.cuba.metadataextensions.entity.MetaClassEntity</class>
+    </metadata-model>
 
 </metadata>

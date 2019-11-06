@@ -1,7 +1,3 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
-    <menu id="application-ddcme" insertBefore="administration">
-        <item screen="ddcme_Customer.browse"/>
-        <item screen="ddcme_EntityVisibilityConfiguration.browse"/>
-    </menu>
 </menu-config>
