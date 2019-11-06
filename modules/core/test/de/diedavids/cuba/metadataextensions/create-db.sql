@@ -9,7 +9,7 @@ create table DDCME_ENTITY_VISIBILITY_CONFIGURATION (
     DELETE_TS timestamp,
     DELETED_BY varchar(50),
     --
-    ENTITY_META_CLASS varchar(255),
+    ENTITY varchar(255),
     ENTITY_ATTRIBUTE varchar(255),
     VISIBLE boolean,
     --

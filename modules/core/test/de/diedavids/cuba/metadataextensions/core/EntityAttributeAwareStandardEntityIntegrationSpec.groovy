@@ -38,7 +38,7 @@ class EntityAttributeAwareStandardEntityIntegrationSpec extends Specification {
 
 
         def userMetaClass = metadata.getClass(User)
-        entityVisibilityConfiguration.setEntityMetaClass(userMetaClass)
+        entityVisibilityConfiguration.setEntity(userMetaClass)
         entityVisibilityConfiguration.setEntityAttribute(userMetaClass.getProperty('login'))
         entityVisibilityConfiguration.setVisible(true)
 
@@ -59,7 +59,7 @@ class EntityAttributeAwareStandardEntityIntegrationSpec extends Specification {
         MetaProperty loginMetaProperty = userMetaClass.getProperty('login')
 
         and:
-        entityVisibilityConfiguration.entityMetaClass = userMetaClass
+        entityVisibilityConfiguration.entity = userMetaClass
         entityVisibilityConfiguration.entityAttribute = loginMetaProperty
         entityVisibilityConfiguration.test = "hello"
 
@@ -74,7 +74,7 @@ class EntityAttributeAwareStandardEntityIntegrationSpec extends Specification {
         then:
         reloadedEntity.test == "hello"
         reloadedEntity.entityAttribute == loginMetaProperty
-        reloadedEntity.entityMetaClass == userMetaClass
+        reloadedEntity.entity == userMetaClass
     }
 
     def "[test entity (src/test)] the entity and entity attribute cen be retrieved from the database"() {
@@ -87,7 +87,7 @@ class EntityAttributeAwareStandardEntityIntegrationSpec extends Specification {
         MetaProperty loginMetaProperty = userMetaClass.getProperty('login')
 
         and:
-        testEntity.entityMetaClass = userMetaClass
+        testEntity.entity = userMetaClass
         testEntity.entityAttribute = loginMetaProperty
         testEntity.visible = true
 
@@ -102,6 +102,6 @@ class EntityAttributeAwareStandardEntityIntegrationSpec extends Specification {
         then:
         reloadedEntity.visible
         reloadedEntity.entityAttribute == loginMetaProperty
-        reloadedEntity.entityMetaClass == userMetaClass
+        reloadedEntity.entity == userMetaClass
     }
 }

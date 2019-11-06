@@ -4,9 +4,7 @@ import com.haulmont.chile.core.annotations.MetaProperty;
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.cuba.core.entity.StandardEntity;
 import de.diedavids.cuba.metadataextensions.converter.MetaClassConverter;
-import de.diedavids.cuba.metadataextensions.converter.MetaPropertyConverter;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
@@ -22,17 +20,17 @@ public class EntityAwareStandardEntity extends StandardEntity implements EntityA
 
     @Convert(converter = MetaClassConverter.class)
     @MetaProperty(datatype = "MetaClass")
-    @Column(name = "ENTITY_META_CLASS")
-    protected MetaClass entityMetaClass;
+    @Column(name = "ENTITY")
+    protected MetaClass entity;
 
     @Override
-    public MetaClass getEntityMetaClass() {
-        return entityMetaClass;
+    public MetaClass getEntity() {
+        return entity;
     }
 
     @Override
-    public void setEntityMetaClass(MetaClass entityMetaClass) {
-        this.entityMetaClass = entityMetaClass;
+    public void setEntity(MetaClass entity) {
+        this.entity = entity;
     }
 
 }
