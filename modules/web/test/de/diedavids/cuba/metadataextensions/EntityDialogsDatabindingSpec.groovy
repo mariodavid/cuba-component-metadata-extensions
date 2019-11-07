@@ -17,9 +17,9 @@ import spock.lang.Specification
 
 import java.util.function.Consumer
 
-import static de.diedavids.cuba.metadataextensions.MetaPropertyInputParameter.metaPropertyParameter
+import static EntityAttributeInputParameter.entityAttributeParameter
 
-class MetadataDialogsDatabindingSpec extends Specification {
+class EntityDialogsDatabindingSpec extends Specification {
 
     @Rule
     public TestUiEnvironment environment =
@@ -31,11 +31,11 @@ class MetadataDialogsDatabindingSpec extends Specification {
                     .withUserLogin("admin")
 
     private Metadata metadata
-    private MetadataDialogs metadataDialogs
+    private EntityDialogs metadataDialogs
 
     void setup() {
         metadata = AppBeans.get(Metadata.class);
-        metadataDialogs = AppBeans.get(MetadataDialogs.class);
+        metadataDialogs = AppBeans.get(EntityDialogs.class);
     }
 
 
@@ -47,9 +47,9 @@ class MetadataDialogsDatabindingSpec extends Specification {
         when:
         InputDialog inputDialog = userMetadataInputDialog()
                 .withParameters(
-                        metaPropertyParameter(userLogin())
+                        entityAttributeParameter(userLogin())
                                 .withDefaultValue("myUser"),
-                        metaPropertyParameter(userGroup())
+                        entityAttributeParameter(userGroup())
                                 .withDefaultValue(group),
                 )
                 .show()
@@ -68,7 +68,7 @@ class MetadataDialogsDatabindingSpec extends Specification {
         InputDialog inputDialog = userMetadataInputDialog()
                 .withEntity(myUser)
                 .withParameter(
-                        metaPropertyParameter(userLogin())
+                        entityAttributeParameter(userLogin())
                                 .withAutoBinding(true)
                 )
                 .show()
@@ -87,7 +87,7 @@ class MetadataDialogsDatabindingSpec extends Specification {
         InputDialog inputDialog = userMetadataInputDialog()
                 .withEntity(myUser)
                 .withParameter(
-                        metaPropertyParameter(userLogin())
+                        entityAttributeParameter(userLogin())
                                 .withAutoBinding(true)
                 )
                 .show()
@@ -113,7 +113,7 @@ class MetadataDialogsDatabindingSpec extends Specification {
         and:
         InputDialog inputDialog = userMetadataInputDialog()
                 .withParameter(
-                        metaPropertyParameter(userLogin())
+                        entityAttributeParameter(userLogin())
                                 .withAutoBinding(true)
                 )
                 .withCloseListener(new Consumer<InputDialog.InputDialogCloseEvent>() {
@@ -155,9 +155,9 @@ class MetadataDialogsDatabindingSpec extends Specification {
         InputDialog inputDialog = userMetadataInputDialog()
                 .withEntity(myUser)
                 .withParameters(
-                        metaPropertyParameter(userLogin())
+                        entityAttributeParameter(userLogin())
                                 .withAutoBinding(true),
-                        metaPropertyParameter(userGroup())
+                        entityAttributeParameter(userGroup())
                                 .withAutoBinding(true),
                 )
                 .withCloseListener(new Consumer<InputDialog.InputDialogCloseEvent>() {
@@ -192,7 +192,7 @@ class MetadataDialogsDatabindingSpec extends Specification {
         InputDialog inputDialog = userMetadataInputDialog()
                 .withEntity(myUser)
                 .withParameter(
-                        metaPropertyParameter(userLogin())
+                        entityAttributeParameter(userLogin())
                                 .withAutoBinding(true)
                 )
                 .show()
@@ -217,8 +217,8 @@ class MetadataDialogsDatabindingSpec extends Specification {
                 .show();
     }
 
-    private MetadataDialogs.MetadataInputDialogBuilder userMetadataInputDialog() {
-        metadataDialogs.createMetadataInputDialog(mainWindow(), User.class)
+    private EntityDialogs.EntityInputDialogBuilder userMetadataInputDialog() {
+        metadataDialogs.createEntityInputDialog(mainWindow(), User.class)
     }
 
     private MetaProperty userLogin() {

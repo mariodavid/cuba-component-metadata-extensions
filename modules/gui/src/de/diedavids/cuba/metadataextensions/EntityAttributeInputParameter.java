@@ -9,9 +9,9 @@ import com.haulmont.cuba.core.global.Metadata;
 import com.haulmont.cuba.gui.app.core.inputdialog.InputParameter;
 
 /**
- * describes a parameter used in {@link de.diedavids.cuba.metadataextensions.MetadataDialogs.MetadataInputDialogBuilder}
+ * describes a parameter used in {@link EntityDialogs.EntityInputDialogBuilder}
  */
-public class MetaPropertyInputParameter {
+public class EntityAttributeInputParameter {
 
 
 
@@ -21,8 +21,8 @@ public class MetaPropertyInputParameter {
      * @param metaProperty the {@link MetaProperty} instance
      * @return meta property input parameter
      */
-    public static MetaPropertyInputParameter metaPropertyParameter(MetaProperty metaProperty) {
-        return new MetaPropertyInputParameter(metaProperty.getName())
+    public static EntityAttributeInputParameter entityAttributeParameter(MetaProperty metaProperty) {
+        return new EntityAttributeInputParameter(metaProperty.getName())
                 .withMetaProperty(metaProperty);
     }
 
@@ -34,9 +34,9 @@ public class MetaPropertyInputParameter {
      * @param property the property of the entity
      * @return meta property input parameter
      */
-    public static MetaPropertyInputParameter metaPropertyParameter(Class<?> entityClass, String property) {
+    public static EntityAttributeInputParameter entityAttributeParameter(Class<?> entityClass, String property) {
         MetaProperty metaProperty = getMetadata().getClass(entityClass).getProperty(property);
-        return metaPropertyParameter(metaProperty);
+        return entityAttributeParameter(metaProperty);
     }
 
 
@@ -47,9 +47,9 @@ public class MetaPropertyInputParameter {
      * @param property the property of the entity
      * @return meta property input parameter
      */
-    public static MetaPropertyInputParameter metaPropertyParameter(String entityClass, String property) {
+    public static EntityAttributeInputParameter entityAttributeParameter(String entityClass, String property) {
         MetaProperty metaProperty = getMetadata().getClass(entityClass).getProperty(property);
-        return metaPropertyParameter(metaProperty);
+        return entityAttributeParameter(metaProperty);
     }
 
 
@@ -59,13 +59,13 @@ public class MetaPropertyInputParameter {
     private MetaProperty metaProperty;
 
 
-    private MetaPropertyInputParameter(String id) {
+    private EntityAttributeInputParameter(String id) {
         inputParameter = InputParameter.parameter(id);
     }
 
 
 
-    public MetaPropertyInputParameter withMetaProperty(MetaProperty metaProperty) {
+    public EntityAttributeInputParameter withMetaProperty(MetaProperty metaProperty) {
 
         this.metaProperty = metaProperty;
         setInputParameterType(metaProperty);
@@ -89,26 +89,26 @@ public class MetaPropertyInputParameter {
         }
     }
 
-    public MetaPropertyInputParameter withDefaultValue(Object defaultValue) {
+    public EntityAttributeInputParameter withDefaultValue(Object defaultValue) {
         inputParameter
                 .withDefaultValue(defaultValue);
         return this;
     }
 
 
-    public MetaPropertyInputParameter withRequired(boolean required) {
+    public EntityAttributeInputParameter withRequired(boolean required) {
         inputParameter
                 .withRequired(required);
         return this;
     }
 
-    public MetaPropertyInputParameter withCaption(String caption) {
+    public EntityAttributeInputParameter withCaption(String caption) {
         inputParameter
                 .withCaption(caption);
         return this;
     }
 
-    public MetaPropertyInputParameter withAutoBinding(boolean autoBinding) {
+    public EntityAttributeInputParameter withAutoBinding(boolean autoBinding) {
         this.autoBinding = autoBinding;
         return this;
     }

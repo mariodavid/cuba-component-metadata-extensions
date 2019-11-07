@@ -1,14 +1,11 @@
 package de.diedavids.cuba.metadataextensions
 
-import com.haulmont.chile.core.model.MetaClass
-import com.haulmont.chile.core.model.MetaProperty
+
 import com.haulmont.cuba.core.global.AppBeans
 import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.gui.app.core.inputdialog.InputDialog
-import com.haulmont.cuba.gui.components.TextInputField
 import com.haulmont.cuba.gui.screen.OpenMode
 import com.haulmont.cuba.gui.screen.Screen
-import com.haulmont.cuba.security.entity.Group
 import com.haulmont.cuba.security.entity.User
 import com.haulmont.cuba.web.app.main.MainScreen
 import com.haulmont.cuba.web.testsupport.TestUiEnvironment
@@ -17,9 +14,7 @@ import spock.lang.Specification
 
 import java.util.function.Consumer
 
-import static de.diedavids.cuba.metadataextensions.MetaPropertyInputParameter.metaPropertyParameter
-
-class MetadataDialogsSpec extends Specification {
+class EntityDialogsSpec extends Specification {
 
 
     @Rule
@@ -32,11 +27,11 @@ class MetadataDialogsSpec extends Specification {
                     .withUserLogin("admin")
 
     private Metadata metadata
-    private MetadataDialogs metadataDialogs
+    private EntityDialogs metadataDialogs
 
     void setup() {
         metadata = AppBeans.get(Metadata.class);
-        metadataDialogs = AppBeans.get(MetadataDialogs.class);
+        metadataDialogs = AppBeans.get(EntityDialogs.class);
     }
 
 
@@ -82,7 +77,7 @@ class MetadataDialogsSpec extends Specification {
                 .show();
     }
 
-    private MetadataDialogs.MetadataInputDialogBuilder userMetadataInputDialog() {
-        metadataDialogs.createMetadataInputDialog(mainWindow(), User.class)
+    private EntityDialogs.EntityInputDialogBuilder userMetadataInputDialog() {
+        metadataDialogs.createEntityInputDialog(mainWindow(), User.class)
     }
 }

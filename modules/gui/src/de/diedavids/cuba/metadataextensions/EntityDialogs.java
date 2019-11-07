@@ -10,24 +10,24 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 
-public interface MetadataDialogs {
+public interface EntityDialogs {
 
 
-    String NAME = "ddcme_MetadataDialogs";
+    String NAME = "ddcme_EntityDialogs";
 
     /**
-     * Creates a metadata input dialog builder. This input dialog renders
+     * Creates a entity input dialog builder. This input dialog renders
      * input fields for properties of an entity
      *
      * <p>
      * Example of showing an input dialog:
      * <pre>{@code
-     * metadataDialogs.createMetadataInputDialog(this, Customer.class)
+     * entityDialogs.createEntityInputDialog(this, Customer.class)
      *     .withCaption(messageBundle.getMessage("change"))
      *     .withParameters(
-     *             metaPropertyParameter(customerMetaClass.getProperty("name"))
+     *             entityAttributeParameter(customerMetaClass.getProperty("name"))
      *                     .withAutoBinding(false),
-     *             metaPropertyParameter(Customer.class, "birthday")
+     *             entityAttributeParameter(Customer.class, "birthday")
      *                     .withAutoBinding(true)
      *     )
      *     .withEntity(customer)
@@ -38,7 +38,7 @@ public interface MetadataDialogs {
      * @param frameOwner origin screen from input dialog is invoked
      * @return builder
      */
-    <E extends Entity> MetadataInputDialogBuilder<E> createMetadataInputDialog(FrameOwner frameOwner, Class<E> entityClass);
+    <E extends Entity> EntityInputDialogBuilder<E> createEntityInputDialog(FrameOwner frameOwner, Class<E> entityClass);
 
 
 
@@ -46,24 +46,24 @@ public interface MetadataDialogs {
     /**
      * Builder for dialogs with inputs of meta properties.
      */
-    interface MetadataInputDialogBuilder<E extends Entity> {
+    interface EntityInputDialogBuilder<E extends Entity> {
 
 
         /**
-         * adds a {@link MetaPropertyInputParameter} for the input dialog
+         * adds a {@link EntityAttributeInputParameter} for the input dialog
          *
          * @param inputParameter the input parameter
          * @return builder
          */
-        MetadataInputDialogBuilder withParameter(MetaPropertyInputParameter inputParameter);
+        EntityInputDialogBuilder withParameter(EntityAttributeInputParameter inputParameter);
 
         /**
-         * adds multiple {@link MetaPropertyInputParameter} for the input dialog
+         * adds multiple {@link EntityAttributeInputParameter} for the input dialog
          *
          * @param inputParameters the input parameters
          * @return builder
          */
-        MetadataInputDialogBuilder withParameters(MetaPropertyInputParameter... inputParameters);
+        EntityInputDialogBuilder withParameters(EntityAttributeInputParameter... inputParameters);
 
         /**
          * sets the entity instance to use for displaying the value and updating the entity instance
@@ -71,7 +71,7 @@ public interface MetadataDialogs {
          * @param entityInstance the entity instance to use
          * @return builder
          */
-        MetadataInputDialogBuilder withEntity(E entityInstance);
+        EntityInputDialogBuilder withEntity(E entityInstance);
 
         /**
          * sets the caption of the input dialog
@@ -79,7 +79,7 @@ public interface MetadataDialogs {
          * @param caption the caption
          * @return builder
          */
-        MetadataInputDialogBuilder withCaption(String caption);
+        EntityInputDialogBuilder withCaption(String caption);
 
         /**
          * Add close listener to the dialog. See close actions for {@link DialogActions} in {@link InputDialog}.
@@ -87,7 +87,7 @@ public interface MetadataDialogs {
          * @param listener
          * @return builder
          */
-        MetadataInputDialogBuilder withCloseListener(Consumer<InputDialog.InputDialogCloseEvent> listener);
+        EntityInputDialogBuilder withCloseListener(Consumer<InputDialog.InputDialogCloseEvent> listener);
 
 
         /**
@@ -95,11 +95,11 @@ public interface MetadataDialogs {
          * instance. Returned validation errors will be shown with another errors from fields.
          * Example
          * <pre>{@code
-         *  metadataDialogs.createMetadataInputDialog(this, Customer.class)
+         *  metadataDialogs.createEntityInputDialog(this, Customer.class)
          *         .withParameters(
-         *             metaPropertyParameter(Customer.class, "name")
+         *             entityAttributeParameter(Customer.class, "name")
          *                     .withAutoBinding(true),
-         *             metaPropertyParameter(Customer.class, "birthday")
+         *             entityAttributeParameter(Customer.class, "birthday")
          *                     .withAutoBinding(true)
          *         .withValidator(context -> {
          *             String name = context.getValue("name");
@@ -115,7 +115,7 @@ public interface MetadataDialogs {
          * @param validator validator
          * @return builder
          */
-        MetadataInputDialogBuilder withValidator(Function<InputDialog.ValidationContext, ValidationErrors> validator);
+        EntityInputDialogBuilder withValidator(Function<InputDialog.ValidationContext, ValidationErrors> validator);
 
         /**
          * Sets dialog width.
@@ -123,7 +123,7 @@ public interface MetadataDialogs {
          * @param width dialog width
          * @return builder
          */
-        MetadataInputDialogBuilder withWidth(String width);
+        EntityInputDialogBuilder withWidth(String width);
 
         /**
          * Sets dialog height.
@@ -131,7 +131,7 @@ public interface MetadataDialogs {
          * @param height dialog height
          * @return builder
          */
-        MetadataInputDialogBuilder withHeight(String height);
+        EntityInputDialogBuilder withHeight(String height);
 
         /**
          * Shows the dialog.

@@ -4,7 +4,6 @@ import com.haulmont.chile.core.datatypes.impl.StringDatatype
 import com.haulmont.chile.core.model.MetaClass
 import com.haulmont.chile.core.model.MetaProperty
 import com.haulmont.cuba.core.global.AppBeans
-import com.haulmont.cuba.core.global.DataManager
 import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.security.entity.Group
 import com.haulmont.cuba.security.entity.Role
@@ -14,9 +13,9 @@ import org.junit.ClassRule
 import spock.lang.Shared
 import spock.lang.Specification
 
-import static de.diedavids.cuba.metadataextensions.MetaPropertyInputParameter.*
+import static EntityAttributeInputParameter.*
 
-class MetaPropertyInputParameterSpec extends Specification {
+class EntityAttributeInputParameterSpec extends Specification {
 
 
     @Shared
@@ -36,7 +35,7 @@ class MetaPropertyInputParameterSpec extends Specification {
         MetaProperty userLogin = userMetaClass().getProperty("login")
 
         when:
-        MetaPropertyInputParameter parameter = metaPropertyParameter(userLogin)
+        EntityAttributeInputParameter parameter = entityAttributeParameter(userLogin)
                     .withDefaultValue("myUser")
 
         then:
@@ -49,7 +48,7 @@ class MetaPropertyInputParameterSpec extends Specification {
         MetaProperty userLogin = userMetaClass().getProperty("login")
 
         when:
-        MetaPropertyInputParameter parameter = metaPropertyParameter(userLogin)
+        EntityAttributeInputParameter parameter = entityAttributeParameter(userLogin)
 
         then:
         parameter.inputParameter.datatype instanceof StringDatatype
@@ -61,7 +60,7 @@ class MetaPropertyInputParameterSpec extends Specification {
         MetaProperty userGroup = userMetaClass().getProperty("group")
 
         when:
-        MetaPropertyInputParameter parameter = metaPropertyParameter(userGroup)
+        EntityAttributeInputParameter parameter = entityAttributeParameter(userGroup)
 
         then:
         parameter.inputParameter.entityClass == Group.class
@@ -73,7 +72,7 @@ class MetaPropertyInputParameterSpec extends Specification {
         MetaProperty roleType = metadata.getClass(Role.class).getProperty("type")
 
         when:
-        MetaPropertyInputParameter parameter = metaPropertyParameter(roleType)
+        EntityAttributeInputParameter parameter = entityAttributeParameter(roleType)
 
         then:
         parameter.inputParameter.enumClass == RoleType.class

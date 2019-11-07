@@ -54,23 +54,24 @@ To see this application component in action, check out this example: [cuba-examp
 
 
 
-### MetadataDialogs API
+### EntityDialogs API
 
-The `MetadataDialogs` API is an extension of the `Dialogs` API provided by CUBA since version 7.0.
+The `EntityDialogs` API is an extension of the `Dialogs` API provided by CUBA since version 7.0.
 
-The MetadataDialogs provides the ability to create an `InputDialog` that was introduces in CUBA 7.1. Instead
-of using this in the general way, where the native datatypes are references, the method `createMetadataInputDialog`
-allows to specific one or multiple meta properties of an Entity. Based on the type that is defined in the Entity,
-the `InputDialog` will contain the correct input fields.
+EntityDialogs provides the ability to create a specific kind of `InputDialog` that allows to enter entity attributes. 
+The method `createMetadataInputDialog` allows to specific one or multiple entity attributes. 
+Based on the type that is defined in the Entity, the `InputDialog` will contain the correct input fields.
+
+Additionally the values can be bound to a particular entity instance.
 
 The API mirrors the style of the existing `Dialogs` API. An example usage of this method looks like this:
 
 ```
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.cuba.gui.app.core.inputdialog.InputDialog;
-import de.diedavids.cuba.metadataextensions.MetadataDialogs;
+import de.diedavids.cuba.metadataextensions.EntityDialogs;
 
-import static de.diedavids.cuba.metadataextensions.MetaPropertyInputParameter.metaPropertyParameter;
+import static entityAttributeParameter;
 
 public class CustomerBrowse extends StandardLookup<Customer> {
 
@@ -82,34 +83,49 @@ public class CustomerBrowse extends StandardLookup<Customer> {
 
         Customer customer = customersTable.getSingleSelected();
 
-        metadataDialogs.createMetadataInputDialog(this, Customer.class)
-                .withEntity(customer)
-                .withCloseListener(closeEvent -> /* ... */ )
-                .withCaption(messageBundle.getMessage("quickChange"))
-                .withParameters(
-                        metaPropertyParameter(Customer.class, "name")
-                                .withAutoBinding(false),
-                        metaPropertyParameter(Customer.class, "birthday")
-                                .withAutoBinding(true)
-                )
-                .show();
+        entityDialogs.createEntityInputDialog(this, Customer.class)
+            .withEntity(customer)
+            .withCaption(messageBundle.getMessage("change"))
+            .withParameters(
+                    entityAttributeParameter(Customer.class, "name")
+                            .withAutoBinding(false),
+                    entityAttributeParameter(Customer.class, "birthday")
+                            .withAutoBinding(true)
+            )
+            .withCloseListener(closeEvent -> /* ... */)
+            .show();
     }
 
 }
 ```
 
 
-The static method `metaPropertyParameter` is leveraged here to easily create `MetaPropertyInputParameter` instances.
+The static method `entityAttributeParameter` is leveraged here to easily create `EntityAttributeInputParameter` instances.
 
-The `MetaPropertyInputParameter` is very similar to the `InputParameter` from CUBA.
+The `EntityAttributeInputParameter` is very similar to the `InputParameter` from CUBA.
 
 #### Auto binding
 There is one attribute called `autoBinding`, which can be set through the corresponding builder method: `withAutoBinding`.
-It means, that in case the Metadata Input Dialog contains an entity reference through `withEntity(customer)`,
-the value defined in the customer instance is used as the default value for the input field.
-Furthermore it writes back the value that was entered during the Dialog into the field of the entity instance
+It means, that in case the the Dialog contains an entity reference through `withEntity(customer)`,
+the value defined in the customer instance is bound to the input field of the Input Dialog.
 
-For more information about the options for the parameter see [MetaPropertyInputParameter.java](https://github.com/mariodavid/cuba-component-metadata-extensions/blob/master/modules/gui/src/de/diedavids/cuba/metadataextensions/MetaPropertyInputParameter.java).
+For more information about the options for the parameter see [EntityAttributeInputParameter.java](https://github.com/mariodavid/cuba-component-metadata-extensions/blob/master/modules/gui/src/de/diedavids/cuba/metadataextensions/EntityAttributeInputParameter.java).
+
+
+### EntityDataProvider API
+
+The `de.diedavids.cuba.metadataextensions.dataprovider.EntityDataProvider` interface provides
+some convenient methods to get information about Entities and its entity attributes.
+
+It consists of the following APIs:
+
+* `entitiesLookupFieldOptions`
+* `entityAttributesLookupFieldOptions`
+* `businessEntityAttributes`
+
+Those methods allow to get Entity (attributes) in various forms.
+
+This API is a combination of the already existing `Metadata`, `MetadataTools` and `MessageTools` APIs of CUBA.
 
 ### Metadata Storage for Entities
 
@@ -157,3 +173,5 @@ The application components provides support for defining both CUBA metadata inte
 Sometimes it is necessary to have an Entity that represents a MetaClass. This is useful when e.g. a list of all existing 
 MetaClasses in the application should be rendered. For this use-case this application component contains the entity
 `de.diedavids.cuba.metadataextensions.entity.MetaClassEntity` that serves that purpose.
+
+

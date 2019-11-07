@@ -1,4 +1,4 @@
-package de.diedavids.cuba.metadataextensions.web;
+package de.diedavids.cuba.metadataextensions.dataprovider;
 
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.chile.core.model.MetaProperty;
@@ -11,8 +11,8 @@ import javax.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Component(MetadataDataProvider.NAME)
-public class MetadataDataProviderBean implements MetadataDataProvider {
+@Component(EntityDataProvider.NAME)
+public class EntityDataProviderBean implements EntityDataProvider {
 
     @Inject
     private Metadata metadata;
@@ -22,7 +22,7 @@ public class MetadataDataProviderBean implements MetadataDataProvider {
     private Security security;
 
     @Override
-    public Map<String, MetaClass> getEntitiesLookupFieldOptions() {
+    public Map<String, MetaClass> entitiesLookupFieldOptions() {
         TreeMap<String, MetaClass> options = new TreeMap<>();
 
         for (MetaClass metaClass : getMetadataTools().getAllPersistentMetaClasses()) {
@@ -31,17 +31,14 @@ public class MetadataDataProviderBean implements MetadataDataProvider {
                 if (Entity.class.isAssignableFrom(javaClass)) {
                     options.put(getMessageTools().getEntityCaption(metaClass) + " (" + metaClass.getName() + ")", metaClass);
                 }
-
             }
-
         }
-
 
         return options;
     }
 
     @Override
-    public List<MetaProperty> getBusinessMetaProperties(MetaClass entityMetaClass) {
+    public List<MetaProperty> businessEntityAttributes(MetaClass entityMetaClass) {
         return entityMetaClass.getProperties()
                 .stream()
                 .filter(metaProperty ->
@@ -52,8 +49,8 @@ public class MetadataDataProviderBean implements MetadataDataProvider {
     }
 
     @Override
-    public Map<String, MetaProperty> getAllAttributesLookupFieldOptions(MetaClass entityMetaClass) {
-        return getLookupMetaProperties(entityMetaClass.getProperties());
+    public Map<String, MetaProperty> entityAttributesLookupFieldOptions(MetaClass metaClass) {
+        return getLookupMetaProperties(metaClass.getProperties());
     }
 
     public Map<String, MetaProperty> getLookupMetaProperties(Collection<MetaProperty> metaProperties) {
