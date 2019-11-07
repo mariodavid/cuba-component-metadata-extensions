@@ -76,7 +76,7 @@ import static entityAttributeParameter;
 public class CustomerBrowse extends StandardLookup<Customer> {
 
     @Inject
-    protected MetadataDialogs metadataDialogs;
+    protected EntityDialogs entityDialogs;
 
     @Subscribe("customersTable.quickChange")
     protected void onCustomersTableQuickChange(Action.ActionPerformedEvent event) {
