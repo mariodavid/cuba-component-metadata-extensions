@@ -1,4 +1,4 @@
-package de.diedavids.cuba.metadataextensions.entity.example;
+package de.diedavids.cuba.metadataextensions.entity.dummy;
 
 import com.haulmont.chile.core.annotations.NamePattern;
 import de.diedavids.cuba.metadataextensions.entity.EntityAttributeAwareStandardEntity;

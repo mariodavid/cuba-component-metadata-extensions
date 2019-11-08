@@ -153,12 +153,39 @@ configure(globalModule) {
         }
     }
 
+    task filterDummyEntities {
+        ext.srcFile = file('src/de/diedavids/cuba/metadataextensions/persistence.xml')
+        ext.dstDir = file("$buildDir/tmp/filtered")
+        ext.dstFile = new File(ext.dstDir, "de/diedavids/cuba/metadataextensions/persistence.xml")
+        inputs.file srcFile
+        outputs.file dstFile
+        doLast {
+            dstDir.mkdirs()
+            dstFile.write(srcFile.readLines().findAll{ !it.contains('.entity.dummy.') }.join('\n'))
+        }
+    }
+
     jar {
+        exclude '**/entity/dummy/*'
+        exclude { it.file == file("$buildDir/resources/main/de/diedavids/cuba/metadataextensions/persistence.xml") }
+        from "$buildDir/tmp/filtered"
+
         manifest {
             attributes('App-Component-Id': cuba.artifact.group)
             attributes('App-Component-Version': cuba.artifact.version + (cuba.artifact.isSnapshot ? '-SNAPSHOT' : ''))
         }
     }
+    jar.dependsOn filterDummyEntities
+
+    sourceJar {
+        exclude '**/entity/dummy/*'
+        exclude {
+            it.file.name == 'persistence.xml' && sourceSets.main.java.srcDirs.contains(it.file.parentFile)
+        }
+        from "$buildDir/tmp/filtered"
+    }
+    sourceJar.dependsOn filterDummyEntities
+
 }
 
 configure(coreModule) {

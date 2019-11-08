@@ -7,7 +7,7 @@
         <class>de.diedavids.cuba.metadataextensions.converter.MetaClassConverter</class>
         <class>de.diedavids.cuba.metadataextensions.converter.MetaPropertyConverter</class>
 
-        <class>de.diedavids.cuba.metadataextensions.entity.example.EntityVisibilityConfiguration</class>
+        <class>de.diedavids.cuba.metadataextensions.entity.dummy.EntityVisibilityConfiguration</class>
 
     </persistence-unit>
 </persistence>
