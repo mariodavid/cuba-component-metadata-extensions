@@ -9,7 +9,6 @@ import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.security.entity.User
 import de.diedavids.cuba.metadataextensions.DdcmeTestContainer
 import de.diedavids.cuba.metadataextensions.entity.example.EntityVisibilityConfiguration
-import de.diedavids.cuba.metadataextensions.entity.dummy.DummyEntityAttributeAwareStandardEntity
 import org.junit.ClassRule
 import spock.lang.Shared
 import spock.lang.Specification
