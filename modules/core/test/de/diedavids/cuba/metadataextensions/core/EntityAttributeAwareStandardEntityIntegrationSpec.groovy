@@ -9,7 +9,7 @@ import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.security.entity.User
 import de.diedavids.cuba.metadataextensions.DdcmeTestContainer
 import de.diedavids.cuba.metadataextensions.entity.example.EntityVisibilityConfiguration
-import de.diedavids.cuba.metadataextensions.entity.example.ProductionEntity
+import de.diedavids.cuba.metadataextensions.entity.dummy.DummyEntityAttributeAwareStandardEntity
 import org.junit.ClassRule
 import spock.lang.Shared
 import spock.lang.Specification
@@ -49,35 +49,7 @@ class EntityAttributeAwareStandardEntityIntegrationSpec extends Specification {
         noExceptionThrown()
     }
 
-    def "[production entity (src/main)] the entity and entity attribute cen be retrieved from the database"() {
-
-        given:
-        ProductionEntity entityVisibilityConfiguration = metadata.create(ProductionEntity)
-
-
-        MetaClass userMetaClass = metadata.getClass(User)
-        MetaProperty loginMetaProperty = userMetaClass.getProperty('login')
-
-        and:
-        entityVisibilityConfiguration.entity = userMetaClass
-        entityVisibilityConfiguration.entityAttribute = loginMetaProperty
-        entityVisibilityConfiguration.test = "hello"
-
-        and:
-        dataManager.commit(entityVisibilityConfiguration)
-
-        when:
-        ProductionEntity reloadedEntity = dataManager.load(ProductionEntity.class)
-                .id(entityVisibilityConfiguration.getId())
-                .one()
-
-        then:
-        reloadedEntity.test == "hello"
-        reloadedEntity.entityAttribute == loginMetaProperty
-        reloadedEntity.entity == userMetaClass
-    }
-
-    def "[test entity (src/test)] the entity and entity attribute cen be retrieved from the database"() {
+    def "the entity and entity attribute cen be retrieved from the database"() {
 
         given:
         EntityVisibilityConfiguration testEntity = metadata.create(EntityVisibilityConfiguration)
