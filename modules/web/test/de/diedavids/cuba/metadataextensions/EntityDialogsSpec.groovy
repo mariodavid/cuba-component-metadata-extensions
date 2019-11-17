@@ -27,11 +27,11 @@ class EntityDialogsSpec extends Specification {
                     .withUserLogin("admin")
 
     private Metadata metadata
-    private EntityDialogs metadataDialogs
+    private EntityDialogs entityDialogs
 
     void setup() {
         metadata = AppBeans.get(Metadata.class);
-        metadataDialogs = AppBeans.get(EntityDialogs.class);
+        entityDialogs = AppBeans.get(EntityDialogs.class);
     }
 
 
@@ -78,6 +78,6 @@ class EntityDialogsSpec extends Specification {
     }
 
     private EntityDialogs.EntityInputDialogBuilder userMetadataInputDialog() {
-        metadataDialogs.createEntityInputDialog(mainWindow(), User.class)
+        entityDialogs.createEntityInputDialog(mainWindow(), User.class)
     }
 }
