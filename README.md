@@ -4,7 +4,7 @@
 
 # CUBA Component - Metadata Extensions
 
-This application component that provides extensions for different use-cases for metadata interactions in CUBA.
+This application component provides extensions for different use-cases for metadata interactions in CUBA.
 
 
 Table of Contents
