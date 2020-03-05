@@ -19,14 +19,14 @@ buildscript {
         classpath 'net.saliman:gradle-cobertura-plugin:2.5.0'
         classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2"
 
+        classpath 'net.researchgate:gradle-release:2.6.0'
+
 
     }
 }
 
+apply plugin: 'net.researchgate.release'
 
-plugins {
-    id 'net.researchgate.release' version '2.8.0'
-}
 
 apply plugin: "com.github.kt3k.coveralls"
 
@@ -106,7 +106,6 @@ def hsql = 'org.hsqldb:hsqldb:2.4.1'
 allprojects {
     apply plugin: 'net.saliman.cobertura'
 }
-
 
 def files = subprojects
         .findAll { !it.name.toLowerCase().contains('theme') }
