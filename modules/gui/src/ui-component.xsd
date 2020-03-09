@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns="http://schemas.diedavids.de/metadataextensions/0.1/ui-component.xsd"
+           attributeFormDefault="unqualified"
+           elementFormDefault="qualified"
+           xmlns:cuba="http://schemas.haulmont.com/cuba/screen/layout.xsd"
+           targetNamespace="http://schemas.diedavids.de/metadataextensions/0.1/ui-component.xsd"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="entityDialog" type="entityDialogType" />
+
+
+    <xs:complexType name="entityDialogType">
+        <xs:complexContent>
+            <xs:extension base="cuba:dialogType">
+                <xs:sequence>
+                    <xs:element name="parameters" type="entityDialogParamsType"/>
+                </xs:sequence>
+
+                <xs:attribute name="entityClass" type="xs:string"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="entityDialogParamsType">
+        <xs:sequence>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="entityAttributeParameter" type="entityDialogParameterType"/>
+            </xs:choice>
+        </xs:sequence>
+
+        <xs:attributeGroup ref="cuba:facetTriggerType"/>
+    </xs:complexType>
+
+    <xs:complexType name="entityDialogParameterType">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="property" type="xs:string" use="required"/>
+        <xs:attribute name="autoBinding" type="xs:boolean"/>
+        <xs:attribute name="caption" type="cuba:resourceString"/>
+        <xs:attribute name="defaultValue"/>
+    </xs:complexType>
+</xs:schema>
