@@ -1,7 +1,6 @@
 package de.diedavids.cuba.metadataextensions.web;
 
 import com.haulmont.bali.util.ReflectionHelper;
-import com.haulmont.chile.core.datatypes.DatatypeRegistry;
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.cuba.core.global.MessageTools;
 import com.haulmont.cuba.core.global.Metadata;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import static com.haulmont.cuba.gui.icons.Icons.ICON_NAME_REGEX;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
@@ -29,6 +27,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Component(EntityDialogFacetProvider.NAME)
 public class EntityDialogFacetProvider implements FacetProvider<EntityDialogFacet> {
+
     public static final String NAME = "ddcme_EntityDialogFacetProvider";
 
     @Inject
