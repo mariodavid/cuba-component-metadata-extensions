@@ -2,7 +2,7 @@ package de.diedavids.cuba.metadataextensions;
 
 import com.haulmont.bali.events.Subscription;
 import com.haulmont.chile.core.model.MetaClass;
-import com.haulmont.cuba.gui.app.core.inputdialog.DialogActions;
+import com.haulmont.cuba.core.entity.Entity;
 import com.haulmont.cuba.gui.app.core.inputdialog.InputDialog;
 import com.haulmont.cuba.gui.app.core.inputdialog.InputParameter;
 import com.haulmont.cuba.gui.components.*;
@@ -13,6 +13,7 @@ import java.util.EventObject;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * Prepares and shows entity dialogs.
@@ -34,10 +35,14 @@ import java.util.function.Function;
                 @StudioProperty(name = "height")
         }
 )
-public interface EntityDialogFacet extends Facet, ActionsAwareDialogFacet<EntityDialogFacet>, HasSubParts {
+public interface EntityDialogFacet<E extends Entity> extends
+        Facet,
+        ActionsAwareDialogFacet<EntityDialogFacet>,
+        HasSubParts {
 
     /**
      * Sets dialog caption.
+     *
      * @param caption caption
      */
     @StudioProperty(type = PropertyType.LOCALIZED_STRING)
@@ -50,6 +55,7 @@ public interface EntityDialogFacet extends Facet, ActionsAwareDialogFacet<Entity
 
     /**
      * Sets dialog width.
+     *
      * @param width width
      */
     @StudioProperty
@@ -67,6 +73,7 @@ public interface EntityDialogFacet extends Facet, ActionsAwareDialogFacet<Entity
 
     /**
      * Sets dialog height.
+     *
      * @param height height
      */
     @StudioProperty
@@ -111,12 +118,10 @@ public interface EntityDialogFacet extends Facet, ActionsAwareDialogFacet<Entity
     String getButtonTarget();
 
 
-
     /**
      * Adds the given {@code Consumer} as dialog {@link InputDialog.InputDialogCloseEvent} listener.
      *
      * @param closeListener close listener
-     *
      * @return close event subscription
      */
     @StudioEvent
@@ -161,6 +166,20 @@ public interface EntityDialogFacet extends Facet, ActionsAwareDialogFacet<Entity
     void setEntityClass(MetaClass entityClass);
 
     MetaClass getEntityClass();
+
+
+    /**
+     * Sets entity provider.
+     *
+     * @param entityProvider entity provider
+     */
+    @StudioDelegate
+    void setEntityProvider(Supplier<E> entityProvider);
+
+    /**
+     * @return entity provider
+     */
+    Supplier<E> getEntityProvider();
 
     /**
      * Event that is fired when EntityDialog is closed.

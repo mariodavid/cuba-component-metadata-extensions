@@ -53,6 +53,16 @@ The Changelog also contains information about breaking changes and tips on how t
 ### Example usage
 To see this application component in action, check out this example: [cuba-example-using-metadata-extensions](https://github.com/mariodavid/cuba-example-using-metadata-extensions).
 
+## Entity Dialog
+
+The entity Dialog is a special kind of an Input Dialog. Instead of defining directly the input parameter types
+manually, in the Entity Dialog a parameter references an Entity attribute. Based on the Metadata API of CUBA
+the correct Input Parameters will be displayed.
+
+The Entity Dialog comes in two flavors: 
+
+* imperative definition via the `EntityDialogs` API
+* declarative definition via a XML Facet
 
 
 ### EntityDialogs API
@@ -112,8 +122,111 @@ the value defined in the customer instance is bound to the input field of the In
 
 For more information about the options for the parameter see [EntityAttributeInputParameter.java](https://github.com/mariodavid/cuba-component-metadata-extensions/blob/master/modules/gui/src/de/diedavids/cuba/metadataextensions/EntityAttributeInputParameter.java).
 
+### Entity Dialog Facet
 
-### EntityDataProvider API
+The alternative to using the `EntityDialogs` API directly via source code is to use the declarative variant,
+where the main part of the entity dialog is defined in the XML screen descriptor.
+
+
+Add a XML namespace `ddcme` to the window tag of your screen like this:
+
+```xml
+    <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:ddcme="http://schemas.diedavids.de/metadataextensions/0.1/ui-component.xsd">
+```
+
+Then add your entity dialog facet to the facet section of the screen:
+
+```xml
+<facets>
+        <ddcme:entityDialog 
+            id="createLaptopDialog" 
+            entityClass="com.company.ceume.entity.Product"
+            caption="msg://createLaptop">
+            <ddcme:parameters>
+                <ddcme:entityAttributeParameter id="name" property="name" autoBinding="true" />
+            </ddcme:parameters>
+        </ddcme:entityDialog>
+</facets>
+```     
+
+The available attributes of the tag are equivalent to using the `EntityDialogs` API for the most part, except for a couple of options.
+
+#### Invocation of Entity Dialog Screen
+
+There are two ways on how to invoke the entity dialog screen. It is either possible to connect it declarative to an action / button
+via references in XML or alternative the `EntityDialogFacet` instance can be injected and opened programmatically.
+
+#### Declarative Invocation via onAction XML attribute
+
+The attributes `onAction` / `onButton` are used to reference an action / button, where the input dialog is displayed. 
+In case the action is performed via a button e.g. the Entity Dialog is opened without any programmatic definition required. 
+
+```xml
+<ddcme:entityDialog 
+    id="createLaptopDialog" 
+    entityClass="com.company.ceume.entity.Product"
+    onAction="createLaptop">
+```
+
+#### Programmatic Invocation via Injection
+
+When programmatic invocation of the Entity Dialog is required, it is also possible to do that. In this case, a reference
+of the Facet can be injected into the screen:
+
+```java
+public class ProductBrowse extends StandardLookup<Product> {
+    
+    @Inject
+    protected EntityDialogFacet createLaptopDialog;
+
+    @Subscribe
+    protected void onAfterShow(AfterShowEvent event) {
+        createLaptopDialog.show();
+    }
+}
+```
+
+#### Entity Provider
+In order to provide an entity that this entityDialog should be bound to, it is possible to define a method in the controller, that
+provides this instance:
+
+```java
+public class ProductBrowse extends StandardLookup<Product> {
+    
+    // ...
+
+    @Install(to = "createLaptopDialog", subject = "entityProvider")
+    protected Product laptopProductEntityProvider() {
+        newLaptopProduct = metadata.create(Product.class);
+        newLaptopProduct.setType(ProductType.LAPTOP);
+        return newLaptopProduct;
+    }
+}
+```
+
+Via the `@Install` annotation the reference to the `createLaptopDialog` facet is created. The subject `entityProvider` indicates
+the extension point for defining the entity instance.
+
+#### Receiving Results via CloseEvent
+
+In order to receive the results of the Entity Dialog, a Close Listener has to be registered in the controller:
+
+```java
+public class ProductBrowse extends StandardLookup<Product> {
+
+    @Subscribe("createLaptopDialog")
+    public void onInputDialogClose(EntityDialogFacet.CloseEvent closeEvent) {
+        
+        //  closeEvent.getValues() contains the entered values
+        
+        // in case the reference was kept in the controller and autoBinding is set,
+        // newLaptopProduct already contains all bound values
+    }
+}
+```
+
+## EntityDataProvider API
 
 The `de.diedavids.cuba.metadataextensions.dataprovider.EntityDataProvider` interface provides
 some convenient methods to get information about Entities and its entity attributes.

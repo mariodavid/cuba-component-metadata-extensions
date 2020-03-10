@@ -3,33 +3,27 @@ package de.diedavids.cuba.metadataextensions.web;
 import com.haulmont.bali.events.Subscription;
 import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.cuba.core.entity.Entity;
-import com.haulmont.cuba.gui.Dialogs;
 import com.haulmont.cuba.gui.GuiDevelopmentException;
-import com.haulmont.cuba.gui.app.core.inputdialog.DialogActions;
 import com.haulmont.cuba.gui.app.core.inputdialog.InputDialog;
-import com.haulmont.cuba.gui.app.core.inputdialog.InputParameter;
 import com.haulmont.cuba.gui.components.*;
 import com.haulmont.cuba.gui.components.actions.BaseAction;
-import com.haulmont.cuba.gui.components.inputdialog.InputDialogAction;
 import com.haulmont.cuba.gui.screen.Extensions;
-import com.haulmont.cuba.gui.screen.UiControllerUtils;
 import com.haulmont.cuba.web.gui.WebAbstractFacet;
 import com.haulmont.cuba.web.gui.components.WebComponentsHelper;
 import de.diedavids.cuba.metadataextensions.EntityAttributeInputParameter;
 import de.diedavids.cuba.metadataextensions.EntityDialogFacet;
 import de.diedavids.cuba.metadataextensions.EntityDialogs;
-import org.apache.commons.collections4.CollectionUtils;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.function.Supplier;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
-public class WebEntityDialogFacet extends WebAbstractFacet implements EntityDialogFacet {
+public class WebEntityDialogFacet<E extends Entity> extends WebAbstractFacet implements EntityDialogFacet<E> {
 
     protected String caption;
 
@@ -49,6 +43,9 @@ public class WebEntityDialogFacet extends WebAbstractFacet implements EntityDial
 
     protected InputDialog inputDialog;
     protected MetaClass entityClass;
+
+
+    protected Supplier<E> entityProvider;
 
     @Override
     public void setCaption(String caption) {
@@ -141,6 +138,17 @@ public class WebEntityDialogFacet extends WebAbstractFacet implements EntityDial
         this.validator = validator;
     }
 
+
+    @Override
+    public void setEntityProvider(Supplier<E> entityProvider) {
+        this.entityProvider = entityProvider;
+    }
+
+    @Override
+    public Supplier<E> getEntityProvider() {
+        return entityProvider;
+    }
+
     @Nullable
     @Override
     public Object getSubPart(String name) {
@@ -163,6 +171,13 @@ public class WebEntityDialogFacet extends WebAbstractFacet implements EntityDial
         EntityDialogs.EntityInputDialogBuilder<Entity> builder = Extensions.getBeanLocator(owner.getFrameOwner())
                 .get(EntityDialogs.class)
                 .createEntityInputDialog(owner.getFrameOwner(), getEntityClass().getJavaClass());
+
+
+        if (entityProvider != null) {
+            builder
+                .withEntity(entityProvider.get());
+        }
+
 
 
         if (width != null) {
