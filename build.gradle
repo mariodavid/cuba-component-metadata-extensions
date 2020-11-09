@@ -3,6 +3,9 @@ buildscript {
     repositories {
         mavenLocal()
         maven {
+            url "https://dl.bintray.com/mariodavid/cuba-components"
+        }
+        maven {
             url 'https://repo.cuba-platform.com/content/groups/work'
             credentials {
                 username(rootProject.hasProperty('repoUser') ? rootProject['repoUser'] : 'cuba')
@@ -138,14 +141,20 @@ configure([globalModule, coreModule, webModule, guiModule]) {
     apply(plugin: 'cuba')
 
     dependencies {
-        compile('org.codehaus.groovy:groovy-all:2.5.2')
-        testCompile('junit:junit:4.12')
-        testCompile 'org.assertj:assertj-core:2.9.0'
+        testCompile('org.junit.jupiter:junit-jupiter-api:5.5.2')
+        testCompile('org.junit.jupiter:junit-jupiter-engine:5.5.2')
+        testCompile('org.junit.vintage:junit-vintage-engine:5.5.2')
+
+        testCompile 'org.mockito:mockito-core:3.2.4'
+        testCompile 'org.mockito:mockito-junit-jupiter:3.2.4'
 
 
         testCompile('org.spockframework:spock-core:1.2-groovy-2.5')
         testCompile('org.springframework:spring-test:4.3.1.RELEASE')
-        testRuntime "cglib:cglib-nodep:3.2.4"
+
+
+        testCompile("org.assertj:assertj-core:3.11.1")
+
     }
 
     task sourceJar(type: Jar) {
@@ -155,6 +164,10 @@ configure([globalModule, coreModule, webModule, guiModule]) {
 
     artifacts {
         archives sourceJar
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
 
@@ -364,6 +377,10 @@ configure(webModule) {
     dependencies {
         compileOnly(servletApi)
         compile(guiModule)
+
+
+
+        testCompile('de.diedavids.sneferu:sneferu:0.3.4')
     }
 
     task webArchive(type: Zip) {

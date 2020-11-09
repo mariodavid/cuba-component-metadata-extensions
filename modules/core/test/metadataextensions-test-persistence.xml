@@ -8,6 +8,5 @@
         <class>de.diedavids.cuba.metadataextensions.converter.MetaPropertyConverter</class>
 
         <class>de.diedavids.cuba.metadataextensions.entity.example.EntityVisibilityConfiguration</class>
-
     </persistence-unit>
 </persistence>
