@@ -176,6 +176,10 @@ configure([globalModule, coreModule, webModule, guiModule]) {
     artifacts {
         archives sourceJar
     }
+
+    test {
+        useJUnitPlatform()
+    }
 }
 
 configure([globalModule, coreModule, guiModule, webModule]) {

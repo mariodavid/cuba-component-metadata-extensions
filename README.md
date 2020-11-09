@@ -141,7 +141,7 @@ Then add your entity dialog facet to the facet section of the screen:
 <facets>
         <ddcme:entityDialog 
             id="createLaptopDialog" 
-            entityClass="com.company.ceume.entity.Product"
+            entityClass="de.diedavids.cuba.metadataextensions.entity.example.Product"
             caption="msg://createLaptop">
             <ddcme:parameters>
                 <ddcme:entityAttributeParameter id="name" property="name" autoBinding="true" />
@@ -165,7 +165,7 @@ In case the action is performed via a button e.g. the Entity Dialog is opened wi
 ```xml
 <ddcme:entityDialog 
     id="createLaptopDialog" 
-    entityClass="com.company.ceume.entity.Product"
+    entityClass="de.diedavids.cuba.metadataextensions.entity.example.Product"
     onAction="createLaptop">
 ```
 

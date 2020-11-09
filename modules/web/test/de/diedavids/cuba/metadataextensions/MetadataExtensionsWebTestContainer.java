@@ -19,7 +19,9 @@ public class MetadataExtensionsWebTestContainer extends TestContainer {
                 // Add this file which is located in CUBA and defines some properties
                 // specifically for test environment. You can replace it with your own
                 // or add another one in the end.
-                "com/haulmont/cuba/web/testsupport/test-web-app.properties"
+                "com/haulmont/cuba/web/testsupport/test-web-app.properties",
+                "de/diedavids/cuba/metadataextensions/test-web-app.properties"
+
         );
     }
 
